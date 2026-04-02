@@ -1,0 +1,17 @@
+# Maven
+target/
+*.jar
+*.war
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Secrets
+.env
+application-local.properties
+
+# OS
+.DS_Store

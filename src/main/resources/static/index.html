@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Coach</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface-2: #22263a;
+      --border: #2e3250;
+      --accent: #6c63ff;
+      --accent-hover: #574fd6;
+      --text: #e8eaf6;
+      --text-muted: #7b80a8;
+      --green: #4caf7d;
+      --yellow: #f5c542;
+      --red: #e05c5c;
+      --radius: 12px;
+      --transition: 0.2s ease;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a89cff, #6c63ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    textarea {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      padding: 14px 16px;
+      resize: vertical;
+      min-height: 160px;
+      transition: border-color var(--transition);
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .file-drop {
+      background: var(--surface-2);
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 32px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      position: relative;
+    }
+
+    .file-drop:hover, .file-drop.dragover {
+      border-color: var(--accent);
+      background: #1e2035;
+    }
+
+    .file-drop input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .file-drop-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .file-drop p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .file-drop p span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .file-name {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: var(--green);
+      font-weight: 500;
+      min-height: 20px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), opacity var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button[type="submit"]:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Results */
+    #results {
+      width: 100%;
+      max-width: 720px;
+      margin-top: 32px;
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+    }
+
+    .result-card h2 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Score */
+    .score-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .score-number {
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .score-number.green  { color: var(--green); }
+    .score-number.yellow { color: var(--yellow); }
+    .score-number.red    { color: var(--red); }
+
+    .score-details {
+      flex: 1;
+    }
+
+    .score-bar-track {
+      background: var(--surface-2);
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .score-bar-fill.green  { background: var(--green); }
+    .score-bar-fill.yellow { background: var(--yellow); }
+    .score-bar-fill.red    { background: var(--red); }
+
+    .score-reason {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Suggestions */
+    .suggestions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .suggestions-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .suggestions-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Cover Letter */
+    .cover-letter-box {
+      position: relative;
+    }
+
+    .cover-letter-box textarea {
+      width: 100%;
+      min-height: 260px;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn {
+      margin-top: 12px;
+      padding: 9px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* Error */
+    .error-banner {
+      background: #2e1a1a;
+      border: 1px solid var(--red);
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: var(--red);
+      font-size: 0.9rem;
+      display: none;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Resume Coach</h1>
+    <p>Upload your resume and paste a job description to get an AI-powered analysis.</p>
+  </header>
+
+  <div class="card">
+    <form id="analyzeForm">
+
+      <div class="form-group">
+        <label for="jobDescription">Job Description</label>
+        <textarea
+          id="jobDescription"
+          name="jobDescription"
+          placeholder="Paste the full job description here…"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Resume (PDF)</label>
+        <div class="file-drop" id="fileDrop">
+          <input type="file" id="resumeFile" name="file" accept=".pdf" required />
+          <div class="file-drop-icon">📄</div>
+          <p><span>Click to upload</span> or drag &amp; drop</p>
+          <p style="font-size:0.8rem; margin-top:4px;">PDF only · max 10 MB</p>
+        </div>
+        <div class="file-name" id="fileName"></div>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        <span class="spinner" id="spinner"></span>
+        <span id="submitLabel">Analyze Resume</span>
+      </button>
+
+    </form>
+
+    <div class="error-banner" id="errorBanner"></div>
+  </div>
+
+  <div id="results">
+
+    <div class="result-card">
+      <h2>Match Score</h2>
+      <div class="score-wrapper">
+        <div class="score-number" id="scoreNumber">—</div>
+        <div class="score-details">
+          <div class="score-bar-track">
+            <div class="score-bar-fill" id="scoreBar" style="width:0%"></div>
+          </div>
+          <div class="score-reason" id="scoreReason"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h2>Suggestions</h2>
+      <ul class="suggestions-list" id="suggestionsList"></ul>
+    </div>
+
+    <div class="result-card">
+      <h2>Cover Letter</h2>
+      <div class="cover-letter-box">
+        <textarea id="coverLetterText" readonly></textarea>
+        <button type="button" class="copy-btn" id="copyBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy to clipboard
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const form        = document.getElementById('analyzeForm');
+    const fileInput   = document.getElementById('resumeFile');
+    const fileDrop    = document.getElementById('fileDrop');
+    const fileNameEl  = document.getElementById('fileName');
+    const submitBtn   = document.getElementById('submitBtn');
+    const spinner     = document.getElementById('spinner');
+    const submitLabel = document.getElementById('submitLabel');
+    const errorBanner = document.getElementById('errorBanner');
+    const results     = document.getElementById('results');
+
+    const scoreNumber = document.getElementById('scoreNumber');
+    const scoreBar    = document.getElementById('scoreBar');
+    const scoreReason = document.getElementById('scoreReason');
+    const suggList    = document.getElementById('suggestionsList');
+    const coverLetter = document.getElementById('coverLetterText');
+    const copyBtn     = document.getElementById('copyBtn');
+
+    // File drag-and-drop visual feedback
+    fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('dragover'); });
+    fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
+    fileDrop.addEventListener('drop', e => {
+      e.preventDefault();
+      fileDrop.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        fileNameEl.textContent = e.dataTransfer.files[0].name;
+      }
+    });
+
+    fileInput.addEventListener('change', () => {
+      fileNameEl.textContent = fileInput.files[0]?.name ?? '';
+    });
+
+    // Form submit
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      showError('');
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+      formData.append('jobDescription', document.getElementById('jobDescription').value);
+
+      try {
+        const res = await fetch('/api/analyze', { method: 'POST', body: formData });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Server error ${res.status}: ${text}`);
+        }
+        const data = await res.json();
+        renderResults(data);
+      } catch (err) {
+        showError(err.message || 'Something went wrong. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    function renderResults(data) {
+      const score = Math.round(data.matchScore ?? 0);
+      const colorClass = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+
+      // Score
+      scoreNumber.textContent = score;
+      scoreNumber.className = 'score-number ' + colorClass;
+      scoreBar.style.width = score + '%';
+      scoreBar.className = 'score-bar-fill ' + colorClass;
+
+      // Extract reason from suggestions text (stored as "Match reason: ...\n\n...")
+      const fullSuggestions = data.suggestions ?? '';
+      const reasonMatch = fullSuggestions.match(/^Match reason:\s*(.+)/);
+      scoreReason.textContent = reasonMatch ? reasonMatch[1] : '';
+
+      // Suggestions bullets — strip "Match reason" preamble, then split on "• "
+      const suggestionsBody = fullSuggestions.replace(/^Match reason:[^\n]*\n\n?/, '').trim();
+      const bullets = suggestionsBody.split(/\n/).filter(l => l.trim().startsWith('•'));
+      suggList.innerHTML = '';
+      bullets.forEach(bullet => {
+        const li = document.createElement('li');
+        li.textContent = bullet.replace(/^•\s*/, '').trim();
+        suggList.appendChild(li);
+      });
+
+      // Cover letter
+      coverLetter.value = data.coverLetter ?? '';
+
+      results.style.display = 'flex';
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Copy button
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(coverLetter.value).then(() => {
+        copyBtn.classList.add('copied');
+        copyBtn.querySelector('span') && (copyBtn.lastChild.textContent = ' Copied!');
+        const textNodes = [...copyBtn.childNodes].filter(n => n.nodeType === 3);
+        if (textNodes.length) textNodes[textNodes.length - 1].textContent = ' Copied!';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          const textNodes2 = [...copyBtn.childNodes].filter(n => n.nodeType === 3);
+          if (textNodes2.length) textNodes2[textNodes2.length - 1].textContent = ' Copy to clipboard';
+        }, 2000);
+      });
+    });
+
+    function setLoading(on) {
+      submitBtn.disabled = on;
+      spinner.style.display = on ? 'block' : 'none';
+      submitLabel.textContent = on ? 'Analyzing…' : 'Analyze Resume';
+    }
+
+    function showError(msg) {
+      errorBanner.textContent = msg;
+      errorBanner.style.display = msg ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
