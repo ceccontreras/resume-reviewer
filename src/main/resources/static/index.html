@@ -4,114 +4,254 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Resume Coach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface-2: #22263a;
-      --border: #2e3250;
-      --accent: #6c63ff;
-      --accent-hover: #574fd6;
-      --text: #e8eaf6;
-      --text-muted: #7b80a8;
-      --green: #4caf7d;
-      --yellow: #f5c542;
-      --red: #e05c5c;
-      --radius: 12px;
-      --transition: 0.2s ease;
+      --navy:   #1a2744;
+      --emerald:#2ecc8e;
+      --emerald-dark: #25b37c;
+      --gray-bg:#f4f6f9;
+      --white:  #ffffff;
+      --text:   #1a2744;
+      --muted:  #6b7a99;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 2px 16px rgba(26,39,68,0.08);
+      --shadow-md: 0 4px 32px rgba(26,39,68,0.12);
     }
 
     body {
-      background: var(--bg);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--gray-bg);
       color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 48px 16px 80px;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    header h1 {
-      font-size: 2rem;
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #a89cff, #6c63ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.05rem;
+      color: var(--navy);
+      text-decoration: none;
     }
 
-    header p {
-      margin-top: 8px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo-icon svg { color: var(--emerald); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-icon-btn:hover { background: var(--gray-bg); color: var(--navy); }
+
+    .nav-cta {
+      margin-left: 8px;
+      padding: 8px 18px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 24px 100px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eafbf3;
+      color: var(--emerald-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--emerald);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── INPUT GRID ── */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 700px) {
+      .input-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
     }
 
     .card {
-      background: var(--surface);
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px;
-      width: 100%;
-      max-width: 720px;
+      box-shadow: var(--shadow);
+      padding: 28px;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-
-    label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-muted);
+    .card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
+
+    .card-label svg { color: var(--emerald); }
 
     textarea {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      width: 100%;
+      background: var(--gray-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
       color: var(--text);
       font-family: inherit;
-      font-size: 0.95rem;
-      line-height: 1.6;
+      font-size: 0.93rem;
+      line-height: 1.65;
       padding: 14px 16px;
       resize: vertical;
-      min-height: 160px;
-      transition: border-color var(--transition);
+      min-height: 220px;
       outline: none;
+      transition: border-color 0.15s;
     }
 
-    textarea:focus {
-      border-color: var(--accent);
-    }
+    textarea:focus { border-color: var(--emerald); }
+    textarea::placeholder { color: #aab0c3; }
 
+    /* ── FILE DROP ── */
     .file-drop {
-      background: var(--surface-2);
       border: 2px dashed var(--border);
-      border-radius: 8px;
-      padding: 32px 16px;
+      border-radius: 10px;
+      background: var(--gray-bg);
+      padding: 40px 20px;
       text-align: center;
       cursor: pointer;
-      transition: border-color var(--transition), background var(--transition);
       position: relative;
+      transition: border-color 0.15s, background 0.15s;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
 
     .file-drop:hover, .file-drop.dragover {
-      border-color: var(--accent);
-      background: #1e2035;
+      border-color: var(--emerald);
+      background: #f0fdf8;
     }
 
     .file-drop input[type="file"] {
@@ -123,53 +263,82 @@
       height: 100%;
     }
 
-    .file-drop-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .file-drop p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .file-drop p span {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .file-name {
-      margin-top: 8px;
-      font-size: 0.85rem;
-      color: var(--green);
-      font-weight: 500;
-      min-height: 20px;
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      padding: 14px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background var(--transition), opacity var(--transition);
+    .upload-icon {
+      width: 52px;
+      height: 52px;
+      background: #eafbf3;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      color: var(--emerald);
+    }
+
+    .file-drop-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .file-drop-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .browse-btn {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      padding: 8px 20px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-top: 4px;
+    }
+
+    .file-name {
+      font-size: 0.85rem;
+      color: var(--emerald-dark);
+      font-weight: 600;
+      min-height: 20px;
+      margin-top: 4px;
+    }
+
+    /* ── CTA BUTTON ── */
+    .cta-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 56px;
+    }
+
+    button[type="submit"] {
+      padding: 15px 40px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.15s, transform 0.15s;
+      letter-spacing: 0.2px;
     }
 
     button[type="submit"]:hover:not(:disabled) {
-      background: var(--accent-hover);
+      opacity: 0.88;
+      transform: translateY(-1px);
     }
 
     button[type="submit"]:disabled {
-      opacity: 0.6;
+      opacity: 0.55;
       cursor: not-allowed;
+      transform: none;
     }
 
     .spinner {
@@ -184,231 +353,404 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Results */
+    /* ── ERROR ── */
+    .error-banner {
+      background: #fff1f1;
+      border: 1px solid #fca5a5;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #b91c1c;
+      font-size: 0.9rem;
+      display: none;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    /* ── RESULTS ── */
     #results {
-      width: 100%;
-      max-width: 720px;
-      margin-top: 32px;
       display: none;
       flex-direction: column;
-      gap: 24px;
+      gap: 28px;
     }
 
-    .result-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 32px;
+    .results-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 4px;
     }
 
-    .result-card h2 {
+    .results-divider span {
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      white-space: nowrap;
     }
 
-    /* Score */
-    .score-wrapper {
-      display: flex;
-      align-items: center;
+    .results-divider::before, .results-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Score + Suggestions row */
+    .results-top {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
       gap: 24px;
     }
 
-    .score-number {
-      font-size: 5rem;
+    @media (max-width: 700px) {
+      .results-top { grid-template-columns: 1fr; }
+    }
+
+    /* ── SCORE CARD ── */
+    .score-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 36px 28px;
+    }
+
+    .ring-wrap {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .ring-wrap svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: #e2e8f0;
+      stroke-width: 10;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: var(--emerald);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 377;
+      transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .ring-fill.red    { stroke: #ef4444; }
+    .ring-fill.yellow { stroke: #f59e0b; }
+    .ring-fill.green  { stroke: var(--emerald); }
+
+    .ring-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-number {
+      font-size: 2.4rem;
       font-weight: 800;
+      color: var(--navy);
       line-height: 1;
-      letter-spacing: -2px;
     }
 
-    .score-number.green  { color: var(--green); }
-    .score-number.yellow { color: var(--yellow); }
-    .score-number.red    { color: var(--red); }
-
-    .score-details {
-      flex: 1;
+    .ring-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
-    .score-bar-track {
-      background: var(--surface-2);
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 14px;
       border-radius: 999px;
-      height: 8px;
-      overflow: hidden;
-      margin-bottom: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
     }
 
-    .score-bar-fill {
-      height: 100%;
-      border-radius: 999px;
-      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    .score-badge.green  { background: #eafbf3; color: #16a34a; }
+    .score-badge.yellow { background: #fffbeb; color: #b45309; }
+    .score-badge.red    { background: #fef2f2; color: #dc2626; }
+
+    .score-reason-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
     }
 
-    .score-bar-fill.green  { background: var(--green); }
-    .score-bar-fill.yellow { background: var(--yellow); }
-    .score-bar-fill.red    { background: var(--red); }
-
-    .score-reason {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+    /* ── SUGGESTIONS CARD ── */
+    .suggestions-card {
+      padding: 28px 32px;
     }
 
-    /* Suggestions */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
     .suggestions-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .suggestions-list li {
       display: flex;
-      gap: 12px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      padding: 12px 16px;
-      background: var(--surface-2);
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
+      gap: 14px;
+      align-items: flex-start;
     }
 
-    .suggestions-list li::before {
-      content: "•";
-      color: var(--accent);
-      font-weight: 700;
+    .sugg-pill {
       flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--emerald);
+      color: var(--white);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-top: 1px;
     }
 
-    /* Cover Letter */
-    .cover-letter-box {
-      position: relative;
+    .sugg-text {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--text);
     }
 
-    .cover-letter-box textarea {
-      width: 100%;
-      min-height: 260px;
+    /* ── COVER LETTER ── */
+    .cover-card {
+      padding: 28px 32px;
+    }
+
+    .cover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .cover-inner {
+      background: var(--gray-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .cover-inner textarea {
+      background: transparent;
+      border: none;
+      min-height: 240px;
+      padding: 0;
       font-size: 0.9rem;
     }
 
+    .cover-inner textarea:focus { border-color: transparent; }
+
     .copy-btn {
-      margin-top: 12px;
-      padding: 9px 20px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color var(--transition), color var(--transition);
       display: flex;
       align-items: center;
       gap: 6px;
-      width: fit-content;
+      padding: 8px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
     }
 
     .copy-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--emerald);
+      color: var(--emerald-dark);
     }
 
     .copy-btn.copied {
-      border-color: var(--green);
-      color: var(--green);
-    }
-
-    /* Error */
-    .error-banner {
-      background: #2e1a1a;
-      border: 1px solid var(--red);
-      border-radius: 8px;
-      padding: 14px 18px;
-      color: var(--red);
-      font-size: 0.9rem;
-      display: none;
-      margin-top: 16px;
+      background: #eafbf3;
+      border-color: var(--emerald);
+      color: var(--emerald-dark);
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Resume Coach</h1>
-    <p>Upload your resume and paste a job description to get an AI-powered analysis.</p>
-  </header>
-
-  <div class="card">
-    <form id="analyzeForm">
-
-      <div class="form-group">
-        <label for="jobDescription">Job Description</label>
-        <textarea
-          id="jobDescription"
-          name="jobDescription"
-          placeholder="Paste the full job description here…"
-          required
-        ></textarea>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
       </div>
+      Resume Coach
+    </a>
 
-      <div class="form-group">
-        <label>Resume (PDF)</label>
-        <div class="file-drop" id="fileDrop">
-          <input type="file" id="resumeFile" name="file" accept=".pdf" required />
-          <div class="file-drop-icon">📄</div>
-          <p><span>Click to upload</span> or drag &amp; drop</p>
-          <p style="font-size:0.8rem; margin-top:4px;">PDF only · max 10 MB</p>
-        </div>
-        <div class="file-name" id="fileName"></div>
-      </div>
+    <ul class="nav-links">
+      <li><a href="#">Features</a></li>
+      <li><a href="#">How it Works</a></li>
+      <li><a href="#">Pricing</a></li>
+    </ul>
 
-      <button type="submit" id="submitBtn">
-        <span class="spinner" id="spinner"></span>
-        <span id="submitLabel">Analyze Resume</span>
+    <div class="nav-icons">
+      <button class="nav-icon-btn" title="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
       </button>
+      <button class="nav-icon-btn" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+      <button class="nav-cta">Sign In</button>
+    </div>
+  </nav>
 
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-badge">AI-Powered Career Tools</div>
+      <h1>The Career <span>Curator</span></h1>
+      <p>Upload your resume and paste any job description — get an instant match score, tailored suggestions, and a personalized cover letter.</p>
+    </div>
+
+    <!-- FORM -->
+    <form id="analyzeForm">
+      <div class="input-grid">
+
+        <!-- Job Description -->
+        <div class="card">
+          <div class="card-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            Job Description
+          </div>
+          <textarea
+            id="jobDescription"
+            name="jobDescription"
+            placeholder="Paste the full job description here…"
+            required
+          ></textarea>
+        </div>
+
+        <!-- File Upload -->
+        <div class="card">
+          <div class="card-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+            Resume
+          </div>
+          <div class="file-drop" id="fileDrop">
+            <input type="file" id="resumeFile" name="file" accept=".pdf" required />
+            <div class="upload-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+              </svg>
+            </div>
+            <div class="file-drop-title">Drag &amp; drop your resume here</div>
+            <div class="file-drop-sub">PDF only · max 10 MB</div>
+            <div class="browse-btn">Browse Files</div>
+          </div>
+          <div class="file-name" id="fileName"></div>
+        </div>
+
+      </div>
+
+      <div class="cta-wrap">
+        <button type="submit" id="submitBtn">
+          <span class="spinner" id="spinner"></span>
+          <span id="submitLabel">Analyze Resume</span>
+          <svg id="arrowIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
     </form>
 
     <div class="error-banner" id="errorBanner"></div>
-  </div>
 
-  <div id="results">
+    <!-- RESULTS -->
+    <div id="results">
+      <div class="results-divider"><span>Analysis Results</span></div>
 
-    <div class="result-card">
-      <h2>Match Score</h2>
-      <div class="score-wrapper">
-        <div class="score-number" id="scoreNumber">—</div>
-        <div class="score-details">
-          <div class="score-bar-track">
-            <div class="score-bar-fill" id="scoreBar" style="width:0%"></div>
+      <div class="results-top">
+
+        <!-- Score Card -->
+        <div class="card score-card">
+          <div class="ring-wrap">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <circle class="ring-track" cx="70" cy="70" r="60"/>
+              <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="60"/>
+            </svg>
+            <div class="ring-inner">
+              <div class="ring-number" id="scoreNumber">—</div>
+              <div class="ring-label">Match Score</div>
+            </div>
           </div>
-          <div class="score-reason" id="scoreReason"></div>
+          <div class="score-badge" id="scoreBadge"></div>
+          <div class="score-reason-text" id="scoreReason"></div>
+        </div>
+
+        <!-- Suggestions Card -->
+        <div class="card suggestions-card">
+          <div class="section-title">Resume Tips</div>
+          <ul class="suggestions-list" id="suggestionsList"></ul>
+        </div>
+
+      </div>
+
+      <!-- Cover Letter Card -->
+      <div class="card cover-card">
+        <div class="cover-header">
+          <div class="section-title" style="margin-bottom:0">Your Personalized Cover Letter</div>
+          <button type="button" class="copy-btn" id="copyBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy
+          </button>
+        </div>
+        <div class="cover-inner">
+          <textarea id="coverLetterText" readonly></textarea>
         </div>
       </div>
-    </div>
 
-    <div class="result-card">
-      <h2>Suggestions</h2>
-      <ul class="suggestions-list" id="suggestionsList"></ul>
     </div>
-
-    <div class="result-card">
-      <h2>Cover Letter</h2>
-      <div class="cover-letter-box">
-        <textarea id="coverLetterText" readonly></textarea>
-        <button type="button" class="copy-btn" id="copyBtn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          Copy to clipboard
-        </button>
-      </div>
-    </div>
-
-  </div>
+  </main>
 
   <script>
     const form        = document.getElementById('analyzeForm');
@@ -417,18 +759,22 @@
     const fileNameEl  = document.getElementById('fileName');
     const submitBtn   = document.getElementById('submitBtn');
     const spinner     = document.getElementById('spinner');
+    const arrowIcon   = document.getElementById('arrowIcon');
     const submitLabel = document.getElementById('submitLabel');
     const errorBanner = document.getElementById('errorBanner');
     const results     = document.getElementById('results');
 
+    const ringFill    = document.getElementById('ringFill');
     const scoreNumber = document.getElementById('scoreNumber');
-    const scoreBar    = document.getElementById('scoreBar');
+    const scoreBadge  = document.getElementById('scoreBadge');
     const scoreReason = document.getElementById('scoreReason');
     const suggList    = document.getElementById('suggestionsList');
     const coverLetter = document.getElementById('coverLetterText');
     const copyBtn     = document.getElementById('copyBtn');
 
-    // File drag-and-drop visual feedback
+    const CIRCUMFERENCE = 2 * Math.PI * 60; // 377
+
+    // Drag-and-drop
     fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('dragover'); });
     fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
     fileDrop.addEventListener('drop', e => {
@@ -436,15 +782,15 @@
       fileDrop.classList.remove('dragover');
       if (e.dataTransfer.files.length) {
         fileInput.files = e.dataTransfer.files;
-        fileNameEl.textContent = e.dataTransfer.files[0].name;
+        fileNameEl.textContent = '✓ ' + e.dataTransfer.files[0].name;
       }
     });
 
     fileInput.addEventListener('change', () => {
-      fileNameEl.textContent = fileInput.files[0]?.name ?? '';
+      fileNameEl.textContent = fileInput.files[0] ? '✓ ' + fileInput.files[0].name : '';
     });
 
-    // Form submit
+    // Submit
     form.addEventListener('submit', async e => {
       e.preventDefault();
       showError('');
@@ -472,25 +818,39 @@
     function renderResults(data) {
       const score = Math.round(data.matchScore ?? 0);
       const colorClass = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
+      const badgeText  = score >= 70 ? 'Strong Potential' : score >= 40 ? 'Moderate Match' : 'Needs Work';
 
-      // Score
+      // Ring
+      const offset = CIRCUMFERENCE - (score / 100) * CIRCUMFERENCE;
+      ringFill.style.strokeDasharray = CIRCUMFERENCE;
+      ringFill.style.strokeDashoffset = CIRCUMFERENCE;
+      ringFill.className = 'ring-fill ' + colorClass;
+      requestAnimationFrame(() => { ringFill.style.strokeDashoffset = offset; });
+
       scoreNumber.textContent = score;
-      scoreNumber.className = 'score-number ' + colorClass;
-      scoreBar.style.width = score + '%';
-      scoreBar.className = 'score-bar-fill ' + colorClass;
 
-      // Extract reason from suggestions text (stored as "Match reason: ...\n\n...")
+      scoreBadge.textContent = badgeText;
+      scoreBadge.className = 'score-badge ' + colorClass;
+
+      // Reason
       const fullSuggestions = data.suggestions ?? '';
       const reasonMatch = fullSuggestions.match(/^Match reason:\s*(.+)/);
       scoreReason.textContent = reasonMatch ? reasonMatch[1] : '';
 
-      // Suggestions bullets — strip "Match reason" preamble, then split on "• "
+      // Bullets
       const suggestionsBody = fullSuggestions.replace(/^Match reason:[^\n]*\n\n?/, '').trim();
       const bullets = suggestionsBody.split(/\n/).filter(l => /^\s*([•\-\*]|\d+\.)/.test(l));
       suggList.innerHTML = '';
-      bullets.forEach(bullet => {
+      bullets.forEach((bullet, i) => {
         const li = document.createElement('li');
-        li.textContent = bullet.replace(/^\s*([•\-\*]|\d+\.)\s*/, '').trim();
+        const pill = document.createElement('div');
+        pill.className = 'sugg-pill';
+        pill.textContent = i + 1;
+        const text = document.createElement('div');
+        text.className = 'sugg-text';
+        text.textContent = bullet.replace(/^\s*([•\-\*]|\d+\.)\s*/, '').trim();
+        li.appendChild(pill);
+        li.appendChild(text);
         suggList.appendChild(li);
       });
 
@@ -501,17 +861,14 @@
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Copy button
+    // Copy
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(coverLetter.value).then(() => {
         copyBtn.classList.add('copied');
-        copyBtn.querySelector('span') && (copyBtn.lastChild.textContent = ' Copied!');
-        const textNodes = [...copyBtn.childNodes].filter(n => n.nodeType === 3);
-        if (textNodes.length) textNodes[textNodes.length - 1].textContent = ' Copied!';
+        copyBtn.childNodes[copyBtn.childNodes.length - 1].textContent = ' Copied!';
         setTimeout(() => {
           copyBtn.classList.remove('copied');
-          const textNodes2 = [...copyBtn.childNodes].filter(n => n.nodeType === 3);
-          if (textNodes2.length) textNodes2[textNodes2.length - 1].textContent = ' Copy to clipboard';
+          copyBtn.childNodes[copyBtn.childNodes.length - 1].textContent = ' Copy';
         }, 2000);
       });
     });
@@ -519,6 +876,7 @@
     function setLoading(on) {
       submitBtn.disabled = on;
       spinner.style.display = on ? 'block' : 'none';
+      arrowIcon.style.display = on ? 'none' : '';
       submitLabel.textContent = on ? 'Analyzing…' : 'Analyze Resume';
     }
 
