@@ -486,11 +486,11 @@
 
       // Suggestions bullets — strip "Match reason" preamble, then split on "• "
       const suggestionsBody = fullSuggestions.replace(/^Match reason:[^\n]*\n\n?/, '').trim();
-      const bullets = suggestionsBody.split(/\n/).filter(l => l.trim().startsWith('•'));
+      const bullets = suggestionsBody.split(/\n/).filter(l => /^\s*([•\-\*]|\d+\.)/.test(l));
       suggList.innerHTML = '';
       bullets.forEach(bullet => {
         const li = document.createElement('li');
-        li.textContent = bullet.replace(/^•\s*/, '').trim();
+        li.textContent = bullet.replace(/^\s*([•\-\*]|\d+\.)\s*/, '').trim();
         suggList.appendChild(li);
       });
 
