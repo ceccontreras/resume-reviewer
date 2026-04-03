@@ -3,255 +3,312 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resume Coach</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Resume Coach — The Career Curator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ─── TOKENS ─────────────────────────────────── */
     :root {
-      --navy:   #1a2744;
-      --emerald:#2ecc8e;
-      --emerald-dark: #25b37c;
-      --gray-bg:#f4f6f9;
-      --white:  #ffffff;
-      --text:   #1a2744;
-      --muted:  #6b7a99;
-      --border: #e2e8f0;
-      --radius: 16px;
-      --shadow: 0 2px 16px rgba(26,39,68,0.08);
-      --shadow-md: 0 4px 32px rgba(26,39,68,0.12);
+      --bg:              #f8f9ff;
+      --surface-low:     #eef4ff;
+      --surface:         #ffffff;
+      --surface-high:    #dfe9fa;
+      --primary:         #1A56DB;
+      --primary-dark:    #002e88;
+      --primary-mid:     #0042b9;
+      --secondary:       #059669;
+      --tertiary:        #10B981;
+      --tertiary-fixed:  #6ffbbe;
+      --sec-container:   #82f5c1;
+      --on-sec-container:#00714e;
+      --neutral:         #4B5563;
+      --on-surface:      #121c28;
+      --outline-variant: rgba(195,198,213,0.15);
+      --error:           #ba1a1a;
+      --error-container: #ffdad6;
+      --radius-pill: 9999px;
+      --radius-xl:   0.75rem;
+      --radius-md:   0.5rem;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--gray-bg);
-      color: var(--text);
+      background: var(--bg);
+      color: var(--on-surface);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    /* ─── NAV (Glassmorphism) ────────────────────── */
     nav {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(248,249,255,0.70);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--outline-variant);
       height: 64px;
       display: flex;
       align-items: center;
+      padding: 0 48px;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
 
-    .nav-logo {
+    .nav-brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--navy);
       text-decoration: none;
+      color: var(--on-surface);
     }
 
-    .nav-logo-icon {
+    .nav-brand-mark {
       width: 32px;
       height: 32px;
-      background: var(--navy);
-      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .nav-logo-icon svg { color: var(--emerald); }
+    .nav-brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
+    .nav-center {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+      display: flex;
+      gap: 36px;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      font-size: 0.9rem;
+    .nav-center a {
+      font-size: 0.875rem;
       font-weight: 500;
-      color: var(--muted);
+      color: var(--neutral);
+      text-decoration: none;
       transition: color 0.15s;
     }
 
-    .nav-links a:hover { color: var(--navy); }
+    .nav-center a:hover { color: var(--on-surface); }
 
-    .nav-icons {
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-ghost-btn {
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--neutral);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-ghost-btn:hover {
+      background: var(--surface-high);
+      color: var(--on-surface);
+    }
+
+    .nav-primary-btn {
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .nav-primary-btn:hover { opacity: 0.88; }
+
+    /* ─── MAIN LAYOUT ────────────────────────────── */
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 72px 32px 120px;
+    }
+
+    /* ─── HERO ───────────────────────────────────── */
+    .hero {
+      margin-bottom: 72px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--sec-container);
+      color: var(--on-sec-container);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--secondary);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 5.5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--on-surface);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--primary), var(--tertiary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--neutral);
+      line-height: 1.7;
+      max-width: 540px;
+      text-align: left;
+      margin: 0 auto 0 auto;
+      padding-left: 4px;
+    }
+
+    /* Asymmetric layout: centered h1, left-aligned sub */
+    .hero-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-sub-wrap {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* ─── SECTION LABEL ──────────────────────────── */
+    .section-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--neutral);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .nav-icon-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--muted);
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .nav-icon-btn:hover { background: var(--gray-bg); color: var(--navy); }
-
-    .nav-cta {
-      margin-left: 8px;
-      padding: 8px 18px;
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-
-    .nav-cta:hover { opacity: 0.88; }
-
-    /* ── MAIN ── */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 64px 24px 100px;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #eafbf3;
-      color: var(--emerald-dark);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      letter-spacing: 0.3px;
-    }
-
-    .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--emerald);
+    .section-label-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--secondary);
       border-radius: 50%;
     }
 
-    .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 span {
-      color: var(--emerald);
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* ── INPUT GRID ── */
+    /* ─── INPUT GRID ─────────────────────────────── */
     .input-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 28px;
+      gap: 20px;
+      margin-bottom: 36px;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 720px) {
       .input-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+      .nav-center { display: none; }
     }
 
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    /* ─── SURFACE CARD (no borders) ─────────────── */
+    .surface-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
       padding: 28px;
+      /* ambient shadow — blue-tinted */
+      box-shadow: 0 10px 40px rgba(18,28,40,0.06);
     }
 
-    .card-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    /* ─── INPUTS (bottom-only focus ring) ───────── */
+    .field-wrap {
+      position: relative;
     }
-
-    .card-label svg { color: var(--emerald); }
 
     textarea {
       width: 100%;
-      background: var(--gray-bg);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: inherit;
+      background: var(--surface-low);
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      color: var(--on-surface);
+      font-family: 'Inter', sans-serif;
       font-size: 0.93rem;
       line-height: 1.65;
-      padding: 14px 16px;
+      padding: 16px;
       resize: vertical;
-      min-height: 220px;
+      min-height: 240px;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.2s, background 0.2s;
     }
 
-    textarea:focus { border-color: var(--emerald); }
-    textarea::placeholder { color: #aab0c3; }
+    textarea:focus {
+      border-bottom-color: var(--primary);
+      background: var(--surface-high);
+    }
 
-    /* ── FILE DROP ── */
+    textarea::placeholder { color: #9ba5bb; }
+
+    /* ─── FILE DROP ──────────────────────────────── */
     .file-drop {
-      border: 2px dashed var(--border);
-      border-radius: 10px;
-      background: var(--gray-bg);
-      padding: 40px 20px;
+      background: var(--surface-low);
+      border-radius: var(--radius-md);
+      padding: 48px 24px;
       text-align: center;
       cursor: pointer;
       position: relative;
-      transition: border-color 0.15s, background 0.15s;
-      min-height: 220px;
+      transition: background 0.2s;
+      min-height: 240px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
+      /* ghost border — felt, not seen */
+      box-shadow: inset 0 0 0 2px rgba(26,86,219,0.12);
     }
 
     .file-drop:hover, .file-drop.dragover {
-      border-color: var(--emerald);
-      background: #f0fdf8;
+      background: var(--surface-high);
+      box-shadow: inset 0 0 0 2px rgba(26,86,219,0.30);
     }
 
     .file-drop input[type="file"] {
@@ -263,80 +320,85 @@
       height: 100%;
     }
 
-    .upload-icon {
-      width: 52px;
-      height: 52px;
-      background: #eafbf3;
-      border-radius: 12px;
+    .upload-orb {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+      border-radius: var(--radius-pill);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--emerald);
+      color: #fff;
     }
 
     .file-drop-title {
+      font-family: 'Manrope', sans-serif;
       font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--navy);
+      font-weight: 700;
+      color: var(--on-surface);
+      letter-spacing: -0.01em;
     }
 
     .file-drop-sub {
-      font-size: 0.82rem;
-      color: var(--muted);
+      font-size: 0.8rem;
+      color: var(--neutral);
     }
 
-    .browse-btn {
+    .browse-pill {
       position: relative;
       z-index: 1;
       pointer-events: none;
-      padding: 8px 20px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.85rem;
+      padding: 8px 22px;
+      background: var(--surface);
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
       font-weight: 600;
-      color: var(--navy);
-      margin-top: 4px;
+      color: var(--primary);
+      box-shadow: 0 2px 12px rgba(18,28,40,0.08);
     }
 
     .file-name {
-      font-size: 0.85rem;
-      color: var(--emerald-dark);
+      font-size: 0.82rem;
+      color: var(--secondary);
       font-weight: 600;
       min-height: 20px;
-      margin-top: 4px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* ── CTA BUTTON ── */
-    .cta-wrap {
+    /* ─── CTA ────────────────────────────────────── */
+    .cta-row {
       display: flex;
       justify-content: center;
-      margin-bottom: 56px;
+      margin-bottom: 80px;
     }
 
     button[type="submit"] {
-      padding: 15px 40px;
-      background: var(--navy);
-      color: var(--white);
+      padding: 16px 48px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+      color: #fff;
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-xl);
+      font-family: 'Manrope', sans-serif;
       font-size: 1rem;
       font-weight: 700;
+      letter-spacing: -0.01em;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       transition: opacity 0.15s, transform 0.15s;
-      letter-spacing: 0.2px;
     }
 
     button[type="submit"]:hover:not(:disabled) {
-      opacity: 0.88;
-      transform: translateY(-1px);
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
 
     button[type="submit"]:disabled {
-      opacity: 0.55;
+      opacity: 0.5;
       cursor: not-allowed;
       transform: none;
     }
@@ -353,98 +415,98 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── ERROR ── */
+    /* ─── ERROR ──────────────────────────────────── */
     .error-banner {
-      background: #fff1f1;
-      border: 1px solid #fca5a5;
-      border-radius: 10px;
-      padding: 14px 18px;
-      color: #b91c1c;
-      font-size: 0.9rem;
+      background: var(--error-container);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      color: var(--error);
+      font-size: 0.875rem;
       display: none;
       margin-bottom: 24px;
       text-align: center;
+      font-weight: 500;
     }
 
-    /* ── RESULTS ── */
+    /* ─── RESULTS ────────────────────────────────── */
     #results {
       display: none;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
 
-    .results-divider {
+    .results-header {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 4px;
     }
 
-    .results-divider span {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .results-divider::before, .results-divider::after {
-      content: '';
+    .results-header-line {
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: var(--surface-high);
     }
 
-    /* Score + Suggestions row */
+    .results-header-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--neutral);
+    }
+
+    /* Score + Tips row */
     .results-top {
       display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 24px;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 720px) {
       .results-top { grid-template-columns: 1fr; }
     }
 
-    /* ── SCORE CARD ── */
+    /* ─── SCORE CARD ─────────────────────────────── */
     .score-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 40px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
-      padding: 36px 28px;
+      box-shadow: 0 10px 40px rgba(18,28,40,0.06);
     }
 
     .ring-wrap {
       position: relative;
-      width: 140px;
-      height: 140px;
+      width: 148px;
+      height: 148px;
     }
 
-    .ring-wrap svg {
-      transform: rotate(-90deg);
-    }
+    .ring-wrap svg { transform: rotate(-90deg); }
 
     .ring-track {
       fill: none;
-      stroke: #e2e8f0;
-      stroke-width: 10;
+      stroke: var(--surface-low);
+      stroke-width: 12;
     }
 
     .ring-fill {
       fill: none;
-      stroke: var(--emerald);
-      stroke-width: 10;
+      stroke: var(--secondary);
+      stroke-width: 12;
       stroke-linecap: round;
-      stroke-dasharray: 377;
-      stroke-dashoffset: 377;
-      transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1);
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: stroke-dashoffset 1.1s cubic-bezier(0.4,0,0.2,1);
     }
 
-    .ring-fill.red    { stroke: #ef4444; }
-    .ring-fill.yellow { stroke: #f59e0b; }
-    .ring-fill.green  { stroke: var(--emerald); }
+    .ring-fill.yellow { stroke: #d97706; }
+    .ring-fill.red    { stroke: var(--error); }
+    .ring-fill.green  { stroke: var(--secondary); }
 
     .ring-inner {
       position: absolute;
@@ -456,93 +518,101 @@
     }
 
     .ring-number {
-      font-size: 2.4rem;
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.6rem;
       font-weight: 800;
-      color: var(--navy);
+      letter-spacing: -0.03em;
+      color: var(--on-surface);
       line-height: 1;
     }
 
-    .ring-label {
+    .ring-sub {
       font-size: 0.65rem;
-      font-weight: 700;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      color: var(--muted);
+      color: var(--neutral);
       margin-top: 2px;
     }
 
     .score-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 5px 14px;
-      border-radius: 999px;
+      gap: 6px;
+      padding: 5px 16px;
+      border-radius: var(--radius-pill);
       font-size: 0.78rem;
       font-weight: 700;
     }
 
-    .score-badge.green  { background: #eafbf3; color: #16a34a; }
-    .score-badge.yellow { background: #fffbeb; color: #b45309; }
-    .score-badge.red    { background: #fef2f2; color: #dc2626; }
+    .score-badge.green  { background: var(--sec-container); color: var(--on-sec-container); }
+    .score-badge.yellow { background: #fef3c7; color: #92400e; }
+    .score-badge.red    { background: var(--error-container); color: var(--error); }
 
     .score-reason-text {
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.87rem;
+      color: var(--neutral);
       text-align: center;
       line-height: 1.6;
     }
 
-    /* ── SUGGESTIONS CARD ── */
-    .suggestions-card {
-      padding: 28px 32px;
+    /* ─── TIPS CARD ──────────────────────────────── */
+    .tips-card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(18,28,40,0.06);
     }
 
-    .section-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--muted);
-      margin-bottom: 20px;
+    .tips-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+      margin-bottom: 24px;
     }
 
-    .suggestions-list {
+    .tips-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
-    .suggestions-list li {
+    .tip-item {
       display: flex;
       gap: 14px;
       align-items: flex-start;
     }
 
-    .sugg-pill {
+    .tip-chip {
       flex-shrink: 0;
-      width: 26px;
-      height: 26px;
-      background: var(--emerald);
-      color: var(--white);
-      border-radius: 8px;
+      background: var(--sec-container);
+      color: var(--on-sec-container);
+      font-size: 0.72rem;
+      font-weight: 800;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-pill);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 800;
       margin-top: 1px;
     }
 
-    .sugg-text {
+    .tip-text {
       font-size: 0.9rem;
-      line-height: 1.55;
-      color: var(--text);
+      line-height: 1.6;
+      color: var(--on-surface);
     }
 
-    /* ── COVER LETTER ── */
+    /* ─── COVER LETTER ───────────────────────────── */
     .cover-card {
-      padding: 28px 32px;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(18,28,40,0.06);
     }
 
     .cover-header {
@@ -552,47 +622,60 @@
       margin-bottom: 20px;
     }
 
+    .cover-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      transition: background 0.15s;
+      /* ghost border - felt, not seen */
+      box-shadow: inset 0 0 0 1.5px rgba(195,198,213,0.5);
+    }
+
+    .copy-btn:hover { background: var(--surface-low); }
+
+    .copy-btn.copied {
+      background: var(--sec-container);
+      color: var(--on-sec-container);
+      box-shadow: none;
+    }
+
     .cover-inner {
-      background: var(--gray-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      background: var(--surface-low);
+      border-radius: var(--radius-md);
       padding: 24px;
     }
 
     .cover-inner textarea {
       background: transparent;
       border: none;
-      min-height: 240px;
+      min-height: 260px;
       padding: 0;
       font-size: 0.9rem;
+      resize: vertical;
+      border-bottom: none;
+      border-radius: 0;
     }
 
-    .cover-inner textarea:focus { border-color: transparent; }
-
-    .copy-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--navy);
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-
-    .copy-btn:hover {
-      border-color: var(--emerald);
-      color: var(--emerald-dark);
-    }
-
-    .copy-btn.copied {
-      background: #eafbf3;
-      border-color: var(--emerald);
-      color: var(--emerald-dark);
+    .cover-inner textarea:focus {
+      border-bottom-color: transparent;
+      background: transparent;
     }
   </style>
 </head>
@@ -600,48 +683,44 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#">
-      <div class="nav-logo-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <a class="nav-brand" href="#">
+      <div class="nav-brand-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
           <line x1="16" y1="13" x2="8" y2="13"/>
           <line x1="16" y1="17" x2="8" y2="17"/>
-          <polyline points="10 9 9 9 8 9"/>
         </svg>
       </div>
-      Resume Coach
+      <span class="nav-brand-name">Resume Coach</span>
     </a>
 
-    <ul class="nav-links">
-      <li><a href="#">Features</a></li>
-      <li><a href="#">How it Works</a></li>
-      <li><a href="#">Pricing</a></li>
-    </ul>
+    <div class="nav-center">
+      <a href="#">Features</a>
+      <a href="#">How it Works</a>
+      <a href="#">Pricing</a>
+    </div>
 
-    <div class="nav-icons">
-      <button class="nav-icon-btn" title="Notifications">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-        </svg>
-      </button>
-      <button class="nav-icon-btn" title="Settings">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-        </svg>
-      </button>
-      <button class="nav-cta">Sign In</button>
+    <div class="nav-right">
+      <button class="nav-ghost-btn">Sign In</button>
+      <button class="nav-primary-btn">Get Started</button>
     </div>
   </nav>
 
   <main>
+
     <!-- HERO -->
     <div class="hero">
-      <div class="hero-badge">AI-Powered Career Tools</div>
-      <h1>The Career <span>Curator</span></h1>
-      <p>Upload your resume and paste any job description — get an instant match score, tailored suggestions, and a personalized cover letter.</p>
+      <div class="hero-body">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          AI-Powered Career Intelligence
+        </div>
+        <h1>The Career<br/><em>Curator</em></h1>
+        <div class="hero-sub-wrap">
+          <p class="hero-sub">Upload your resume and paste any job description — get an instant match score, actionable suggestions, and a personalized cover letter crafted by AI.</p>
+        </div>
+      </div>
     </div>
 
     <!-- FORM -->
@@ -649,47 +728,46 @@
       <div class="input-grid">
 
         <!-- Job Description -->
-        <div class="card">
-          <div class="card-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
+        <div class="surface-card">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
             Job Description
           </div>
-          <textarea
-            id="jobDescription"
-            name="jobDescription"
-            placeholder="Paste the full job description here…"
-            required
-          ></textarea>
+          <div class="field-wrap">
+            <textarea
+              id="jobDescription"
+              name="jobDescription"
+              placeholder="Paste the full job description here…"
+              required
+            ></textarea>
+          </div>
         </div>
 
         <!-- File Upload -->
-        <div class="card">
-          <div class="card-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-            </svg>
-            Resume
+        <div class="surface-card">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Resume Document
           </div>
           <div class="file-drop" id="fileDrop">
             <input type="file" id="resumeFile" name="file" accept=".pdf" required />
-            <div class="upload-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+            <div class="upload-orb">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 16 12 12 8 16"/>
+                <line x1="12" y1="12" x2="12" y2="21"/>
                 <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
               </svg>
             </div>
-            <div class="file-drop-title">Drag &amp; drop your resume here</div>
+            <div class="file-drop-title">Drop your resume here</div>
             <div class="file-drop-sub">PDF only · max 10 MB</div>
-            <div class="browse-btn">Browse Files</div>
+            <div class="browse-pill">Browse Files</div>
           </div>
           <div class="file-name" id="fileName"></div>
         </div>
 
       </div>
 
-      <div class="cta-wrap">
+      <div class="cta-row">
         <button type="submit" id="submitBtn">
           <span class="spinner" id="spinner"></span>
           <span id="submitLabel">Analyze Resume</span>
@@ -704,44 +782,49 @@
 
     <!-- RESULTS -->
     <div id="results">
-      <div class="results-divider"><span>Analysis Results</span></div>
+
+      <div class="results-header">
+        <div class="results-header-line"></div>
+        <div class="results-header-label">Analysis Results</div>
+        <div class="results-header-line"></div>
+      </div>
 
       <div class="results-top">
 
-        <!-- Score Card -->
-        <div class="card score-card">
+        <!-- Score -->
+        <div class="score-card">
           <div class="ring-wrap">
-            <svg width="140" height="140" viewBox="0 0 140 140">
-              <circle class="ring-track" cx="70" cy="70" r="60"/>
-              <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="60"/>
+            <svg width="148" height="148" viewBox="0 0 148 148">
+              <circle class="ring-track" cx="74" cy="74" r="63.7"/>
+              <circle class="ring-fill" id="ringFill" cx="74" cy="74" r="63.7"/>
             </svg>
             <div class="ring-inner">
               <div class="ring-number" id="scoreNumber">—</div>
-              <div class="ring-label">Match Score</div>
+              <div class="ring-sub">Match Score</div>
             </div>
           </div>
           <div class="score-badge" id="scoreBadge"></div>
           <div class="score-reason-text" id="scoreReason"></div>
         </div>
 
-        <!-- Suggestions Card -->
-        <div class="card suggestions-card">
-          <div class="section-title">Resume Tips</div>
-          <ul class="suggestions-list" id="suggestionsList"></ul>
+        <!-- Tips -->
+        <div class="tips-card">
+          <div class="tips-title">Resume Improvement Tips</div>
+          <ul class="tips-list" id="suggestionsList"></ul>
         </div>
 
       </div>
 
-      <!-- Cover Letter Card -->
-      <div class="card cover-card">
+      <!-- Cover Letter -->
+      <div class="cover-card">
         <div class="cover-header">
-          <div class="section-title" style="margin-bottom:0">Your Personalized Cover Letter</div>
+          <div class="cover-title">Your Personalized Cover Letter</div>
           <button type="button" class="copy-btn" id="copyBtn">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
             </svg>
-            Copy
+            Copy to clipboard
           </button>
         </div>
         <div class="cover-inner">
@@ -772,9 +855,9 @@
     const coverLetter = document.getElementById('coverLetterText');
     const copyBtn     = document.getElementById('copyBtn');
 
-    const CIRCUMFERENCE = 2 * Math.PI * 60; // 377
+    // r=63.7 → circumference = 2π×63.7 ≈ 400.2
+    const CIRC = 2 * Math.PI * 63.7;
 
-    // Drag-and-drop
     fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('dragover'); });
     fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
     fileDrop.addEventListener('drop', e => {
@@ -790,7 +873,6 @@
       fileNameEl.textContent = fileInput.files[0] ? '✓ ' + fileInput.files[0].name : '';
     });
 
-    // Submit
     form.addEventListener('submit', async e => {
       e.preventDefault();
       showError('');
@@ -818,17 +900,16 @@
     function renderResults(data) {
       const score = Math.round(data.matchScore ?? 0);
       const colorClass = score >= 70 ? 'green' : score >= 40 ? 'yellow' : 'red';
-      const badgeText  = score >= 70 ? 'Strong Potential' : score >= 40 ? 'Moderate Match' : 'Needs Work';
+      const badgeText  = score >= 70 ? '✦ Strong Potential' : score >= 40 ? '◈ Moderate Match' : '◇ Needs Work';
 
-      // Ring
-      const offset = CIRCUMFERENCE - (score / 100) * CIRCUMFERENCE;
-      ringFill.style.strokeDasharray = CIRCUMFERENCE;
-      ringFill.style.strokeDashoffset = CIRCUMFERENCE;
+      // Animated ring
+      const offset = CIRC - (score / 100) * CIRC;
+      ringFill.style.strokeDasharray = CIRC;
+      ringFill.style.strokeDashoffset = CIRC;
       ringFill.className = 'ring-fill ' + colorClass;
       requestAnimationFrame(() => { ringFill.style.strokeDashoffset = offset; });
 
       scoreNumber.textContent = score;
-
       scoreBadge.textContent = badgeText;
       scoreBadge.className = 'score-badge ' + colorClass;
 
@@ -843,32 +924,36 @@
       suggList.innerHTML = '';
       bullets.forEach((bullet, i) => {
         const li = document.createElement('li');
-        const pill = document.createElement('div');
-        pill.className = 'sugg-pill';
-        pill.textContent = i + 1;
+        li.className = 'tip-item';
+
+        const chip = document.createElement('div');
+        chip.className = 'tip-chip';
+        chip.textContent = i + 1;
+
         const text = document.createElement('div');
-        text.className = 'sugg-text';
+        text.className = 'tip-text';
         text.textContent = bullet.replace(/^\s*([•\-\*]|\d+\.)\s*/, '').trim();
-        li.appendChild(pill);
+
+        li.appendChild(chip);
         li.appendChild(text);
         suggList.appendChild(li);
       });
 
-      // Cover letter
       coverLetter.value = data.coverLetter ?? '';
 
       results.style.display = 'flex';
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Copy
     copyBtn.addEventListener('click', () => {
       navigator.clipboard.writeText(coverLetter.value).then(() => {
         copyBtn.classList.add('copied');
-        copyBtn.childNodes[copyBtn.childNodes.length - 1].textContent = ' Copied!';
+        const textNode = [...copyBtn.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+        if (textNode) textNode.textContent = ' Copied!';
         setTimeout(() => {
           copyBtn.classList.remove('copied');
-          copyBtn.childNodes[copyBtn.childNodes.length - 1].textContent = ' Copy';
+          const tn = [...copyBtn.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+          if (tn) tn.textContent = ' Copy to clipboard';
         }, 2000);
       });
     });
