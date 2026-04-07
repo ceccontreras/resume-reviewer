@@ -24,7 +24,7 @@ public class ResumeService {
         this.geminiService = geminiService;
     }
 
-    public Resume analyze(MultipartFile file, String jobDescription) throws IOException {
+    public Resume analyze(MultipartFile file, String jobDescription, com.resumecoach.model.User user) throws IOException {
         String resumeText = extractTextFromPdf(file);
 
         GeminiService.MatchResult matchResult = geminiService.getMatchScore(resumeText, jobDescription);
@@ -32,6 +32,7 @@ public class ResumeService {
         String coverLetter = geminiService.generateCoverLetter(resumeText, jobDescription);
 
         Resume resume = new Resume();
+        resume.setUser(user);
         resume.setResumeText(resumeText);
         resume.setJobDescription(jobDescription);
         resume.setMatchScore(matchResult.score());

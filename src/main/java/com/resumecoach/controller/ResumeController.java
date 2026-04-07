@@ -1,11 +1,15 @@
 package com.resumecoach.controller;
 
 import com.resumecoach.model.Resume;
+import com.resumecoach.model.User;
+import com.resumecoach.repository.UserRepository;
 import com.resumecoach.service.ResumeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +23,11 @@ public class ResumeController {
     private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
 
     private final ResumeService resumeService;
+    private final UserRepository userRepository;
 
-    public ResumeController(ResumeService resumeService) {
+    public ResumeController(ResumeService resumeService, UserRepository userRepository) {
         this.resumeService = resumeService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -38,14 +44,18 @@ public class ResumeController {
     @PostMapping(value = "/analyze", consumes = "multipart/form-data")
     public ResponseEntity<Resume> analyze(
             @RequestParam MultipartFile file,
-            @RequestParam String jobDescription) {
+            @RequestParam String jobDescription,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
+
         try {
-            Resume saved = resumeService.analyze(file, jobDescription);
+            Resume saved = resumeService.analyze(file, jobDescription, user);
             return ResponseEntity.ok(saved);
         } catch (IOException e) {
             log.error("Analysis failed: {}", e.getMessage(), e);

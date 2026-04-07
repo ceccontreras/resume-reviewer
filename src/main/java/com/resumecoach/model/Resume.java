@@ -1,5 +1,6 @@
 package com.resumecoach.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,6 +11,11 @@ public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private com.resumecoach.model.User user;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String resumeText;
@@ -36,6 +42,9 @@ public class Resume {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public com.resumecoach.model.User getUser() { return user; }
+    public void setUser(com.resumecoach.model.User user) { this.user = user; }
 
     public String getResumeText() { return resumeText; }
     public void setResumeText(String resumeText) { this.resumeText = resumeText; }
