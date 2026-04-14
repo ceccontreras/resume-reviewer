@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — My Resume Rate</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f8f9ff;
+      --surface:      #ffffff;
+      --surface-low:  #eef4ff;
+      --primary:      #1A56DB;
+      --primary-dark: #002e88;
+      --primary-mid:  #0042b9;
+      --neutral:      #4B5563;
+      --on-surface:   #121c28;
+      --outline-variant: rgba(195,198,213,0.15);
+      --radius-xl:    0.75rem;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--on-surface);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(248,249,255,0.70);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--outline-variant);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--on-surface);
+    }
+
+    .nav-brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .updated {
+      font-size: 0.85rem;
+      color: var(--neutral);
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #2d3748;
+    }
+
+    ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--outline-variant);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 0.95rem; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.85rem; color: var(--neutral); text-decoration: none; }
+    .footer-links a:hover { color: var(--on-surface); }
+    .footer-copy { font-size: 0.8rem; color: var(--neutral); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">
+      <img class="nav-brand-mark" src="/favicon.png" alt="My Resume Rate logo" />
+      <span class="nav-brand-name">My Resume Rate</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: April 13, 2026</p>
+
+    <p>My Resume Rate ("we", "us", or "our") is committed to protecting your privacy. This policy explains what information we collect, how we use it, and your rights regarding that information.</p>
+
+    <h2>1. Information We Collect</h2>
+    <ul>
+      <li><strong>Account information:</strong> When you sign up, your name and email address are managed by Clerk, our authentication provider. We store only a unique identifier linked to your account.</li>
+      <li><strong>Resume content:</strong> The text extracted from resumes you upload, along with the job descriptions you provide, are stored to show your analysis history.</li>
+      <li><strong>Usage data:</strong> We track the number of analyses you run each month to enforce plan limits.</li>
+      <li><strong>Payment information:</strong> If you upgrade to Pro, payments are processed by Stripe. We never see or store your card details.</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To provide resume analysis powered by Google Gemini AI.</li>
+      <li>To display your analysis history and allow you to manage it.</li>
+      <li>To enforce free-tier usage limits and manage your subscription.</li>
+      <li>To improve the service over time.</li>
+    </ul>
+
+    <h2>3. Data Sharing</h2>
+    <p>We do not sell your personal data. Resume and job description text is sent to Google's Gemini API solely to generate analysis results. Please review <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> for details on how they handle that data.</p>
+
+    <h2>4. Data Retention</h2>
+    <p>Your analysis history is retained until you delete it or close your account. You can delete individual analyses at any time from the history panel.</p>
+
+    <h2>5. Security</h2>
+    <p>All data is transmitted over HTTPS. Authentication is handled by Clerk, which uses industry-standard security practices.</p>
+
+    <h2>6. Your Rights</h2>
+    <p>You may request deletion of your account and all associated data at any time by contacting us at <a href="mailto:ceccontreras5@gmail.com">ceccontreras5@gmail.com</a>.</p>
+
+    <h2>7. Changes to This Policy</h2>
+    <p>We may update this policy from time to time. The "Last updated" date at the top of this page will reflect any changes.</p>
+
+    <h2>8. Contact</h2>
+    <p>Questions? Reach us at <a href="mailto:ceccontreras5@gmail.com">ceccontreras5@gmail.com</a>.</p>
+  </main>
+
+  <footer>
+    <div class="footer-brand">My Resume Rate</div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="mailto:ceccontreras5@gmail.com">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 My Resume Rate. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — My Resume Rate</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f8f9ff;
+      --surface:      #ffffff;
+      --surface-low:  #eef4ff;
+      --primary:      #1A56DB;
+      --primary-dark: #002e88;
+      --primary-mid:  #0042b9;
+      --neutral:      #4B5563;
+      --on-surface:   #121c28;
+      --outline-variant: rgba(195,198,213,0.15);
+      --radius-xl:    0.75rem;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--on-surface);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(248,249,255,0.70);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--outline-variant);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--on-surface);
+    }
+
+    .nav-brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    h1 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .updated {
+      font-size: 0.85rem;
+      color: var(--neutral);
+      margin-bottom: 48px;
+    }
+
+    h2 {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #2d3748;
+    }
+
+    ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--outline-variant);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 0.95rem; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.85rem; color: var(--neutral); text-decoration: none; }
+    .footer-links a:hover { color: var(--on-surface); }
+    .footer-copy { font-size: 0.8rem; color: var(--neutral); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">
+      <img class="nav-brand-mark" src="/favicon.png" alt="My Resume Rate logo" />
+      <span class="nav-brand-name">My Resume Rate</span>
+    </a>
+  </nav>
+
+  <main>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: April 13, 2026</p>
+
+    <p>By using My Resume Rate ("the Service"), you agree to these Terms of Service. Please read them carefully.</p>
+
+    <h2>1. Use of the Service</h2>
+    <p>My Resume Rate provides AI-powered resume analysis to help job seekers improve their applications. You may use the Service only for lawful, personal purposes. You may not:</p>
+    <ul>
+      <li>Use the Service to submit content that violates any applicable law.</li>
+      <li>Attempt to reverse-engineer, scrape, or abuse the Service's API.</li>
+      <li>Share your account or allow others to use your plan's analyses.</li>
+    </ul>
+
+    <h2>2. Account & Authentication</h2>
+    <p>Accounts are created and managed through Clerk. You are responsible for maintaining the security of your account. Notify us immediately at <a href="mailto:ceccontreras5@gmail.com">ceccontreras5@gmail.com</a> if you suspect unauthorized access.</p>
+
+    <h2>3. Free & Pro Plans</h2>
+    <ul>
+      <li><strong>Free plan:</strong> 3 resume analyses per calendar month. Limits reset on the 1st of each month.</li>
+      <li><strong>Pro plan:</strong> Unlimited analyses for a monthly subscription fee, billed via Stripe.</li>
+      <li>Subscription fees are non-refundable except where required by law.</li>
+    </ul>
+
+    <h2>4. AI-Generated Content</h2>
+    <p>Analysis results, suggestions, and cover letters are generated by Google Gemini AI. They are provided for informational purposes only and do not constitute professional career advice. We do not guarantee any specific outcome from using the Service.</p>
+
+    <h2>5. Your Content</h2>
+    <p>You retain ownership of the resume content and job descriptions you submit. By using the Service, you grant us a limited license to process that content to provide the analysis. We do not use your resume content to train AI models.</p>
+
+    <h2>6. Availability</h2>
+    <p>We aim to keep the Service available but do not guarantee uninterrupted access. We may modify or discontinue the Service at any time with reasonable notice.</p>
+
+    <h2>7. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, My Resume Rate is not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+
+    <h2>8. Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. Continued use of the Service after changes are posted constitutes acceptance of the new Terms.</p>
+
+    <h2>9. Contact</h2>
+    <p>Questions about these Terms? Contact us at <a href="mailto:ceccontreras5@gmail.com">ceccontreras5@gmail.com</a>.</p>
+  </main>
+
+  <footer>
+    <div class="footer-brand">My Resume Rate</div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="mailto:ceccontreras5@gmail.com">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 My Resume Rate. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>

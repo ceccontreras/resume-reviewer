@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — My Resume Rate</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script
+    async
+    crossorigin="anonymous"
+    data-clerk-publishable-key="pk_test_ZmxlZXQtYXNwLTM1LmNsZXJrLmFjY291bnRzLmRldiQ"
+    src="https://fleet-asp-35.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+    type="text/javascript"
+  ></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f8f9ff;
+      --primary-dark: #002e88;
+      --primary-mid:  #0042b9;
+      --primary:      #1A56DB;
+      --neutral:      #4B5563;
+      --on-surface:   #121c28;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--on-surface);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(248,249,255,0.70);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(195,198,213,0.15);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--on-surface);
+    }
+
+    .nav-brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-brand-name {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    main {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    #clerk-signin-mount {
+      width: 100%;
+      max-width: 440px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">
+      <img class="nav-brand-mark" src="/favicon.png" alt="My Resume Rate logo" />
+      <span class="nav-brand-name">My Resume Rate</span>
+    </a>
+  </nav>
+
+  <main>
+    <div id="clerk-signin-mount"></div>
+  </main>
+
+  <script>
+    const appearance = {
+      variables: {
+        colorPrimary: '#1A56DB',
+        colorBackground: '#ffffff',
+        colorInputBackground: '#eef4ff',
+        colorText: '#121c28',
+        colorTextSecondary: '#4B5563',
+        colorDanger: '#ba1a1a',
+        fontFamily: '"Inter", system-ui, sans-serif',
+        borderRadius: '12px',
+      },
+      elements: {
+        card: {
+          boxShadow: '0 10px 40px rgba(18,28,40,0.10)',
+          border: 'none',
+          borderRadius: '16px',
+          padding: '32px',
+        },
+        headerTitle: {
+          fontFamily: '"Manrope", sans-serif',
+          fontWeight: '800',
+          letterSpacing: '-0.02em',
+          color: '#121c28',
+        },
+        headerSubtitle: { color: '#4B5563' },
+        formButtonPrimary: {
+          backgroundImage: 'linear-gradient(135deg, #002e88, #0042b9)',
+          fontFamily: '"Manrope", sans-serif',
+          fontWeight: '700',
+          fontSize: '0.95rem',
+          border: 'none',
+        },
+        footerActionLink: {
+          color: '#1A56DB',
+          fontWeight: '600',
+        },
+      }
+    };
+
+    window.addEventListener('load', async () => {
+      const clerk = window.Clerk;
+
+      await clerk.load({
+        signInUrl: '/sign-in',
+        signUpUrl: '/sign-up',
+        afterSignInUrl: '/',
+        afterSignUpUrl: '/',
+      });
+
+      // Already signed in — go straight to app
+      if (clerk.user) {
+        window.location.href = '/';
+        return;
+      }
+
+      clerk.mountSignIn(document.getElementById('clerk-signin-mount'), {
+        routing: 'hash',
+        appearance,
+      });
+    });
+  </script>
+</body>
+</html>
