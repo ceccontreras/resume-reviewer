@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
-import com.stripe.model.BillingPortal;
 import com.stripe.model.Event;
 import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
@@ -110,7 +109,8 @@ public class StripeController {
                     .setReturnUrl(returnUrl)
                     .build();
 
-            BillingPortal.Session portalSession = BillingPortal.Session.create(params);
+            com.stripe.model.billingportal.Session portalSession =
+                com.stripe.model.billingportal.Session.create(params);
             return ResponseEntity.ok(Map.of("url", portalSession.getUrl()));
         } catch (Exception e) {
             log.error("Stripe portal session creation failed: {}", e.getMessage(), e);
