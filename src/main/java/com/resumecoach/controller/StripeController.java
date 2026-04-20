@@ -2,9 +2,12 @@ package com.resumecoach.controller;
 
 import com.resumecoach.model.User;
 import com.resumecoach.repository.UserRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
+import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class StripeController {
@@ -110,22 +114,41 @@ public class StripeController {
         }
 
         if ("checkout.session.completed".equals(event.getType())) {
-            event.getDataObjectDeserializer().getObject().ifPresent(obj -> {
-                Session session = (Session) obj;
-                String clerkId = session.getMetadata() != null ? session.getMetadata().get("clerkId") : null;
-                if (clerkId == null) {
-                    log.warn("Webhook: checkout.session.completed missing clerkId metadata");
-                    return;
+            String clerkId = null;
+
+            // Try standard deserialization first
+            Optional<StripeObject> maybeObj = event.getDataObjectDeserializer().getObject();
+            if (maybeObj.isPresent() && maybeObj.get() instanceof Session session) {
+                clerkId = session.getMetadata() != null ? session.getMetadata().get("clerkId") : null;
+            } else {
+                // API version mismatch — fall back to raw JSON parsing
+                log.warn("Webhook: Stripe API version mismatch, falling back to raw JSON parsing");
+                try {
+                    String rawJson = event.getDataObjectDeserializer().getRawJson();
+                    JsonNode root = new ObjectMapper().readTree(rawJson);
+                    JsonNode meta = root.path("metadata");
+                    if (!meta.isMissingNode() && meta.hasNonNull("clerkId")) {
+                        clerkId = meta.get("clerkId").asText();
+                    }
+                } catch (Exception e) {
+                    log.error("Webhook: failed to parse raw session JSON: {}", e.getMessage());
                 }
-                userRepository.findByClerkId(clerkId).ifPresentOrElse(
-                    user -> {
-                        user.setRole(User.Role.PRO);
-                        userRepository.save(user);
-                        log.info("Upgraded user {} to PRO", clerkId);
-                    },
-                    () -> log.warn("Webhook: no user found for clerkId {}", clerkId)
-                );
-            });
+            }
+
+            if (clerkId == null) {
+                log.warn("Webhook: checkout.session.completed missing clerkId metadata");
+                return ResponseEntity.ok("OK");
+            }
+
+            final String finalClerkId = clerkId;
+            userRepository.findByClerkId(finalClerkId).ifPresentOrElse(
+                user -> {
+                    user.setRole(User.Role.PRO);
+                    userRepository.save(user);
+                    log.info("Upgraded user {} to PRO", finalClerkId);
+                },
+                () -> log.warn("Webhook: no user found for clerkId {}", finalClerkId)
+            );
         }
 
         return ResponseEntity.ok("OK");
