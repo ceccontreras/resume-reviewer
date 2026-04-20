@@ -1112,11 +1112,11 @@
     <div class="hero-eyebrow">AI-Powered Resume Analysis</div>
     <h1>Stop guessing.<br/><span>Start getting hired.</span></h1>
     <p class="hero-sub">Upload your resume, paste a job description, and get an instant match score, improvement tips, and a tailored cover letter — in seconds.</p>
-    <a href="#analyze" class="hero-cta">
+    <a href="#analyze" class="hero-cta" id="heroCta">
       Analyze my resume free
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
-    <p class="hero-note">Free plan · 3 analyses/month · No credit card required</p>
+    <p class="hero-note" id="heroNote">Free plan · 3 analyses/month · No credit card required</p>
   </section>
 
   <!-- HOW IT WORKS -->
@@ -1383,6 +1383,19 @@
         <div id="clerk-user-btn"></div>
       `;
       clerk.mountUserButton(document.getElementById('clerk-user-btn'), { appearance: clerkAppearance });
+
+      // Update hero CTA based on plan
+      const heroCta  = document.getElementById('heroCta');
+      const heroNote = document.getElementById('heroNote');
+      if (heroCta && heroNote && status) {
+        if (status.role === 'PRO') {
+          heroCta.firstChild.textContent = 'Analyze my resume ';
+          heroNote.textContent = '✦ Pro Plan · Unlimited analyses';
+        } else {
+          heroCta.firstChild.textContent = 'Analyze my resume free ';
+          heroNote.textContent = `Free plan · ${status.analysesUsed}/${status.monthlyLimit} analyses used this month`;
+        }
+      }
     }
 
     function escapeHtml(str) {
