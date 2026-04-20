@@ -14,6 +14,9 @@ public class User {
     @Column(unique = true)
     private String clerkId;
 
+    @Column
+    private String stripeCustomerId;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.FREE;
@@ -35,6 +38,9 @@ public class User {
 
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+
+    public String getStripeCustomerId() { return stripeCustomerId; }
+    public void setStripeCustomerId(String stripeCustomerId) { this.stripeCustomerId = stripeCustomerId; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

@@ -1377,8 +1377,12 @@
           ? `<span class="plan-pill pro">✦ PRO</span>`
           : `<span class="plan-pill free">FREE · ${status.analysesUsed}/${status.monthlyLimit}</span>`
         : '';
+      const manageBtn = status?.role === 'PRO'
+        ? `<button class="nav-ghost-btn" onclick="openPortal()">Manage Subscription</button>`
+        : '';
       navRight.innerHTML = `
         ${planHtml}
+        ${manageBtn}
         <span class="nav-user-email">${email}</span>
         <div id="clerk-user-btn"></div>
       `;
@@ -1584,6 +1588,21 @@
         if (data.url) window.location.href = data.url;
         else { showError(data.error || 'Could not start checkout.'); if (btn) btn.disabled = false; }
       } catch (_) { showError('Could not start checkout.'); if (btn) btn.disabled = false; }
+    }
+
+    async function openPortal() {
+      const token = await getToken();
+      if (!token) { window.location.href = '/sign-in'; return; }
+      try {
+        const res = await fetch('/api/stripe/portal', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ returnUrl: window.location.origin + '/' })
+        });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+        else showError(data.error || 'Could not open billing portal.');
+      } catch (_) { showError('Could not open billing portal.'); }
     }
 
     function showToast(msg) {
